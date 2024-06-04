@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
-from dotenv import load_dotenv
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -145,11 +143,11 @@ DATABASES = {
         # 'PASSWORD': '270302',
         # 'HOST': 'localhost',  # Utiliza el nombre del servicio del contenedor PostgreSQL localhost
         # 'PORT': '5432',  # Deja en blanco para usar el puerto predeterminado
-        'NAME': os.environ.get("verde_vital"),
-        'USER': "TeVital",
-        'PASSWORD': "270302",
-        'HOST': os.environ.get("postgres"),
-        'PORT': os.environ.get("5432"),
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
