@@ -146,9 +146,9 @@ DATABASES = {
         # 'HOST': 'localhost',  # Utiliza el nombre del servicio del contenedor PostgreSQL localhost
         # 'PORT': '5432',  # Deja en blanco para usar el puerto predeterminado
         'NAME': os.environ.get("verde_vital"),
-        'USER': os.environ.get("TeVital"),
-        'PASSWORD': os.environ.get("270302"),
-        'HOST': os.environ.get("localhost"),
+        'USER': "TeVital",
+        'PASSWORD': "270302",
+        'HOST': os.environ.get("postgres"),
         'PORT': os.environ.get("5432"),
     }
 }
