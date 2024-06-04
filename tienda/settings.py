@@ -128,10 +128,21 @@ WSGI_APPLICATION = 'tienda.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'verde_vital',
+        'USER': 'TeVital',
+        'PASSWORD': '270302',
+        'HOST': 'localhost',  # Utiliza el nombre del servicio del contenedor PostgreSQL localhost
+        'PORT': '5432',  # Deja en blanco para usar el puerto predeterminado
     }
 }
 
