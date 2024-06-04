@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Verde Vital{% endblock %}</title>
+    <link href="{% static "css/styles.css" %}" rel="stylesheet">
+</head>
+
+<body>
+<header>
+    <h1>Verde Vital</h1>
+</header>
+<nav>
+    <div class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="{% url 'shop:producto_lista' %}">Productos</a>
+        <a href="#about">Acerca de</a>
+        <a href="#contact">Contacto</a>
+    </div>
+    <div class="cart">
+        {% with total_items=cart|length %}
+            {% if total_items > 0 %}
+                Tu carrito:
+                <a href="{% url "cart:cart_detalle" %}">
+                    {{ total_items }} item{{ total_items|pluralize }},
+                    ₲{{ cart.get_total_precio }}
+                </a>
+            {% elif not orden %}
+                Tu carrito está vacío.
+            {% endif %}
+        {% endwith %}
+    </div>
+</nav>
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+<footer class="footer">
+    <p>&copy; 2024 Verde Vital. Todos los derechos reservados.</p>
+</footer>
+</body>
+
+</html>

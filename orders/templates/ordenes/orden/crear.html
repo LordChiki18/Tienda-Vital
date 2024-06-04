@@ -1,0 +1,30 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+    Verificar pedido
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+        <div class="content-wrapper">
+            <h1>Verificar pedido</h1>
+            <div class="order-info">
+                <h3>Tu pedido</h3>
+                <ul>
+                    {% for item in cart %}
+                        <li>
+                            {{ item.cantidad }}x {{ item.producto.nombre }}
+                            <span>₲{{ item.total_precio }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p>Total: {{ cart.get_total_precio }}</p>
+            </div>
+            <form method="post" class="order-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input type="submit" value="Realizar pedido">
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container" id="products">
+        <h2>Nuestros Productos</h2>
+        <div class="product">
+            <img src="te-verde.jpg" alt="Té Verde">
+            <h2>Té Verde</h2>
+            <p>Un té fresco y revitalizante.</p>
+        </div>
+        <div class="product">
+            <img src="te-negro.jpg" alt="Té Negro">
+            <h2>Té Negro</h2>
+            <p>Un té fuerte y energizante.</p>
+        </div>
+        <div class="product">
+            <img src="te-blanco.jpg" alt="Té Blanco">
+            <h2>Té Blanco</h2>
+            <p>Un té delicado y suave.</p>
+        </div>
+    </div>
+    <div class="container" id="about">
+        <h2>Acerca de Nosotros</h2>
+        <p>Somos una tienda dedicada a ofrecer los mejores tés de todo el mundo.</p>
+    </div>
+    <div class="container" id="contact">
+        <h2>Contacto</h2>
+        <p>Puedes contactarnos en <a href="mailto:info@tiendadete.com">info@tiendadete.com</a>.</p>
+    </div>
+{% endblock content %}
