@@ -4,6 +4,7 @@ from shop.models import Producto
 from .cart import Cart
 from .forms import CartAddProductForm
 
+
 # Create your views here.
 
 @require_POST
@@ -14,9 +15,10 @@ def cart_agregar(request, producto_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.agregar(producto=producto,
-                 cantidad=cd['cantidad'],
-                 anular_cantidad=cd['anular'])
+                     cantidad=cd['cantidad'],
+                     anular_cantidad=cd['anular'])
     return redirect('cart:cart_detalle')
+
 
 @require_POST
 def cart_remover(request, producto_id):
@@ -25,6 +27,7 @@ def cart_remover(request, producto_id):
     cart.remover(producto)
     return redirect('cart:cart_detalle')
 
+
 def cart_detalle(request):
     cart = Cart(request)
     for item in cart:
@@ -32,4 +35,3 @@ def cart_detalle(request):
             'cantidad': item['cantidad'],
             'anular': True})
     return render(request, 'cart/detalle.html', {'cart': cart})
-
