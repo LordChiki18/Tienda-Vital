@@ -30,7 +30,7 @@ class Persona(AbstractBaseUser, PermissionsMixin):
     objects = PersonaManager()
 
     USERNAME_FIELD = 'custom_username'
-    REQUIRED_FIELDS = ['nombre', 'apellido', 'numero_documento']
+    REQUIRED_FIELDS = ['nombre', 'apellido', 'numero_documento','email']
 
     is_staff = models.BooleanField(default=False)
 
