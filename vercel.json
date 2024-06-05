@@ -8,7 +8,7 @@
       "src": "build_files.sh",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "staticfiles_build"
+        "distDir": "static-build"
       }
     }
   ],
@@ -22,5 +22,5 @@
             "dest": "tienda/wsgi.py"
         }
     ],
-   "outputDirectory": "staticfiles_build"
+   "outputDirectory": "static-build"
 }
