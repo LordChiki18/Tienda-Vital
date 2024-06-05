@@ -1,6 +1,6 @@
-# build_files.sh
-pip install -r requirements.txt
-
-# make migrations
-python3.9 manage.py migrate
-python3.9 manage.py collectstatic
+echo "BUILD START"
+python3.11 --version
+python3.11 -m ensurepip
+python3.11 -m pip install -r requirements.txt
+python3.11 manage.py collectstatic --noinput --clear
+echo "BUILD END"
