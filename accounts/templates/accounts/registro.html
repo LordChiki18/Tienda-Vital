@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+    Registro
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+        <div class="content-wrapper">
+            <h1>Contigo en todo momento</h1>
+            <div>
+                <h1>Tu tienda de confianza</h1>
+            </div>
+            <form action="{% url 'accounts:registro' %}" method="post" class="order-form">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                <button class="btn form__btn" type="submit">Registrarme</button>
+                {{ form.non_field_errors }}
+            </form>
+        </div>
+    </div>
+{% endblock content %}
