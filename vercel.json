@@ -21,5 +21,6 @@
             "src": "/(.*)",
             "dest": "tienda/wsgi.py"
         }
-    ]
+    ],
+   "outputDirectory": "staticfiles_build"
 }
