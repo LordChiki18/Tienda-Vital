@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'api.apps.ApiConfig',
+    'accounts.apps.AccountsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -131,28 +132,25 @@ WSGI_APPLICATION = 'tienda.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
+#
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv("POSTGRES_DATABASE"),
+#         'USER': os.getenv("POSTGRES_USER"),
+#         'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+#         'HOST': os.getenv("POSTGRES_HOST"),
+#         'PORT': os.getenv("POSTGRES_DB_PORT"),
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'verde_vital',
-        # 'USER': 'TeVital',
-        # 'PASSWORD': '270302',
-        # 'HOST': 'localhost',  # Utiliza el nombre del servicio del contenedor PostgreSQL localhost
-        # 'PORT': '5432',  # Deja en blanco para usar el puerto predeterminado
-        'NAME': os.getenv("POSTGRES_DATABASE"),
-        'USER': os.getenv("POSTGRES_USER"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-        'HOST': os.getenv("POSTGRES_HOST"),
-        'PORT': os.getenv("POSTGRES_DB_PORT"),
-    }
-}
+AUTH_USER_MODEL = 'accounts.Persona'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -191,6 +189,13 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_build', 'static')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'verdevital90@gmail.com'#password #2345@35@$%//$
+EMAIL_HOST_PASSWORD = 'xtnp qnpm whay tjif'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
