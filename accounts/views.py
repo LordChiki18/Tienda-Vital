@@ -1,8 +1,11 @@
 import secrets
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 import string
+
+from django.template.loader import render_to_string
+from django.urls import reverse
 
 from accounts.forms import RegistroForm
 
@@ -19,16 +22,15 @@ def generate_secure_password(length=10):
             return password
 
 
-def enviar_correo(to_email, subject, message):
+def enviar_correo(to_email, subject, template_name, context):
     from_email = 'verdevital90@gmail.com'
 
-    send_mail(
-        subject,
-        message,
-        from_email,
-        [to_email],
-        fail_silently=False,
-    )
+    message = render_to_string(template_name, context)
+
+    email = EmailMessage(subject, message, from_email, [to_email])
+    email.content_subtype = "html"
+
+    email.send(fail_silently=False)
 
 
 def registro_usuario(request):
@@ -42,21 +44,28 @@ def registro_usuario(request):
             generated_password = generate_secure_password()  # Genera una contraseña aleatoria
             user.set_password(generated_password)  # Configura la contraseña generada
             user.save()  # Ahora guarda el usuario en la base de datos
-            login(request, user)
+            # login(request, user)
             print("Usuario guardado en la base de datos")
 
             # Obtén los datos del usuario
             nombre = form.cleaned_data.get('nombre')
             apellido = form.cleaned_data.get('apellido')
             email = form.cleaned_data.get('email')
+            custom_username = user.custom_username
+
+            login_url = request.build_absolute_uri(reverse('accounts:iniciar_sesion'))
 
             # Envía el correo electrónico
             subject = 'Registro exitoso'
-            message = (f'Hola, {nombre} {apellido}!\nTe hemos registrado satisfactoriamente.'
-                       f'\nTu id de sesion es tu CI: {user.custom_username}'
-                       f'\nTu contraseña generica es: {generated_password}')
+            context = {
+                'nombre': nombre,
+                'apellido': apellido,
+                'custom_username': custom_username,
+                'generated_password': generated_password,
+                'login_url': login_url,
+            }
 
-            enviar_correo(email, subject, message)
+            enviar_correo(email, subject, 'accounts/registro_exitoso_email.html', context)
 
             return redirect('shop:index')
     else:
