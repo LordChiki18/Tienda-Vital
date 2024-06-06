@@ -29,6 +29,7 @@ class Producto(models.Model):
     imagen = models.ImageField(upload_to='productos/%Y/%m/%d', blank=True)
     descripcion = models.TextField(blank=True)
     precio = models.PositiveIntegerField()
+    cantidad = models.PositiveIntegerField(default=0)  # Nuevo campo cantidad
     disponible = models.BooleanField(default=True)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
@@ -43,6 +44,11 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    def save(self, *args, **kwargs):
+        if self.cantidad == 0:
+            self.disponible = False
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('shop:producto_detalle',

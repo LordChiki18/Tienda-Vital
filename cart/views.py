@@ -11,7 +11,7 @@ from .forms import CartAddProductForm
 def cart_agregar(request, producto_id):
     cart = Cart(request)
     producto = get_object_or_404(Producto, id=producto_id)
-    form = CartAddProductForm(request.POST)
+    form = CartAddProductForm(request.POST, producto=producto)
     if form.is_valid():
         cd = form.cleaned_data
         cart.agregar(producto=producto,
@@ -31,7 +31,8 @@ def cart_remover(request, producto_id):
 def cart_detalle(request):
     cart = Cart(request)
     for item in cart:
+        producto = item['producto']
         item['update_quantity_form'] = CartAddProductForm(initial={
             'cantidad': item['cantidad'],
-            'anular': True})
+            'anular': True}, producto=producto)
     return render(request, 'cart/detalle.html', {'cart': cart})

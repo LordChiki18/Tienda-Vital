@@ -2,9 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, generics, permissions
 from rest_framework.permissions import IsAuthenticated
 
-from accounts.models import Persona, Cliente
-from api.serializers import CategoriaSerializer, ProductoSerializer, PersonaSerializer, ClienteSerializer, \
-    PersonaUpdateSerializer
+from accounts.models import Persona
+from api.serializers import CategoriaSerializer, ProductoSerializer, PersonaSerializer, PersonaUpdateSerializer
 from shop.models import Categoria, Producto
 
 
@@ -43,8 +42,7 @@ class PersonaUpdateView(generics.RetrieveUpdateAPIView):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-
-class ClienteViews(viewsets.ModelViewSet):
-    queryset = Cliente.objects.all()
-    permission_classes = [permissions.IsAdminUser]
-    serializer_class = ClienteSerializer
+# class ClienteViews(viewsets.ModelViewSet):
+#     queryset = Cliente.objects.all()
+#     permission_classes = [permissions.IsAdminUser]
+#     serializer_class = ClienteSerializer
