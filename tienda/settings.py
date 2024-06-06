@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
-    #['127.0.0.1', '.vercel.app']
+# ['127.0.0.1', '.vercel.app']
 
 # Application definition
 
@@ -195,7 +195,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'verdevital90@gmail.com'#password #2345@35@$%//$
+EMAIL_HOST_USER = 'verdevital90@gmail.com'  # password #2345@35@$%//$
 EMAIL_HOST_PASSWORD = 'xtnp qnpm whay tjif'
 
 # Default primary key field type
