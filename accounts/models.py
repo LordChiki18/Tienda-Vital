@@ -26,6 +26,8 @@ class Persona(AbstractBaseUser, PermissionsMixin):
     numero_documento = models.CharField(max_length=255, unique=True)
     direccion = models.CharField(max_length=255)
     celular = models.CharField(max_length=255)
+    codigo_postal = models.CharField(max_length=20)
+    ciudad = models.CharField(max_length=100)
     custom_username = models.CharField(max_length=30, unique=True, null=True, blank=True)
     objects = PersonaManager()
 
@@ -44,10 +46,10 @@ class Persona(AbstractBaseUser, PermissionsMixin):
         super().save(*args, **kwargs)
 
 
-class Cliente(models.Model):
-    cliente_id = models.AutoField(primary_key=True)
-    persona_id = models.OneToOneField(Persona, on_delete=models.CASCADE)
-    fecha_ingreso = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.persona_id}"
+# class Cliente(models.Model):
+#     cliente_id = models.AutoField(primary_key=True)
+#     persona_id = models.OneToOneField(Persona, on_delete=models.CASCADE)
+#     fecha_ingreso = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return f"{self.persona_id}"
