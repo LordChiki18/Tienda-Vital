@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
-from accounts.models import Persona, Cliente
+from accounts.models import Persona
 from shop.models import Categoria, Producto
 
 
@@ -35,7 +35,7 @@ class PersonaUpdateSerializer(serializers.ModelSerializer):
                   'celular']
 
 
-class ClienteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cliente
-        fields = '__all__'
+# class ClienteSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Cliente
+#         fields = '__all__'

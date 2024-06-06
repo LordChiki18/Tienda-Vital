@@ -17,15 +17,17 @@ class Cart:
 
     def __iter__(self):
         """
-            Iterar los items del carrito y obtener los productos 
-            de la base de datos.
+        Iterar los items del carrito y obtener los productos
+        de la base de datos.
         """
         producto_ids = self.cart.keys()
         # Obtener los objetos del producto y agregarlos al carrito.
         productos = Producto.objects.filter(id__in=producto_ids)
         cart = self.cart.copy()
         for producto in productos:
-            cart[str(producto.id)]['producto'] = producto
+            producto_id = str(producto.id)
+            if producto_id in cart:
+                cart[producto_id]['producto'] = producto
         for item in cart.values():
             item['precio'] = int(item['precio'])
             item['total_precio'] = item['precio'] * item['cantidad']

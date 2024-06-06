@@ -25,7 +25,7 @@ def producto_lista(request, categoria_slug=None):
 
 def producto_detalle(request, id, slug):
     producto = get_object_or_404(Producto, id=id, slug=slug, disponible=True)
-    cart_product_form = CartAddProductForm()
+    cart_product_form = CartAddProductForm(producto=producto)
     return render(request,
                   'shop/producto/detalle.html',
                   {'producto': producto,

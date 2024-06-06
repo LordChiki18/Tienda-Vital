@@ -5,6 +5,7 @@ from .models import OrdenItem
 from .forms import OrdenCreateForm
 from cart.cart import Cart
 
+
 def orden_create(request):
     cart = Cart(request)
     if request.method == 'POST':
@@ -18,13 +19,11 @@ def orden_create(request):
                                          cantidad=item['cantidad'])
             # limpiar el carrito
             cart.limpiar()
-            return render(request, 
-                      'ordenes/orden/creado.html',
-                      {'orden': orden})
+            return render(request,
+                          'ordenes/orden/creado.html',
+                          {'orden': orden})
     else:
         form = OrdenCreateForm()
     return render(request,
                   'ordenes/orden/crear.html',
                   {'cart': cart, 'form': form})
-
-
