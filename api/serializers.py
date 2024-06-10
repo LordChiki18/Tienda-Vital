@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from accounts.models import Persona
 from shop.models import Categoria, Producto
+from orders.models import Orden, OrdenItem
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -33,6 +34,18 @@ class PersonaUpdateSerializer(serializers.ModelSerializer):
         model = Persona
         fields = ['email', 'ciudad_id', 'nombre', 'apellido', 'direccion',
                   'celular']
+
+
+class OrdenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Orden
+        fields = '__all__'
+
+
+class OrdenItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrdenItem
+        fields = '__all__'
 
 
 # class ClienteSerializer(serializers.ModelSerializer):

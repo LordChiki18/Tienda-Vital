@@ -3,7 +3,9 @@ from rest_framework import viewsets, generics, permissions
 from rest_framework.permissions import IsAuthenticated
 
 from accounts.models import Persona
-from api.serializers import CategoriaSerializer, ProductoSerializer, PersonaSerializer, PersonaUpdateSerializer
+from api.serializers import CategoriaSerializer, ProductoSerializer, PersonaSerializer, PersonaUpdateSerializer, \
+    OrdenSerializer, OrdenItemSerializer
+from orders.models import Orden, OrdenItem
 from shop.models import Categoria, Producto
 
 
@@ -42,7 +44,20 @@ class PersonaUpdateView(generics.RetrieveUpdateAPIView):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
+
 # class ClienteViews(viewsets.ModelViewSet):
 #     queryset = Cliente.objects.all()
 #     permission_classes = [permissions.IsAdminUser]
 #     serializer_class = ClienteSerializer
+
+
+class OrdenViews(viewsets.ModelViewSet):
+    queryset = Orden.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrdenSerializer
+
+
+class OrdenItemViews(viewsets.ModelViewSet):
+    queryset = OrdenItem.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrdenItemSerializer
