@@ -25,6 +25,11 @@
                 {% csrf_token %}
                 <input type="submit" value="Realizar pedido">
             </form>
+            <p>Nombre: {{ persona.nombre }}</p>
+            <p>Apellido: {{ persona.apellido }}</p>
+            <p>C.I: {{ persona.numero_documento }}</p>
+            <p>Nro de Telefono: {{ persona.celular }}</p>
+            <p>Email: {{ persona.email }}</p>
         </div>
     </div>
 {% endblock %}

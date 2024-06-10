@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de compra</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+<div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <div style="text-align: center; padding: 10px 0; background-color: #4caf50; color: #ffffff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        <h1>Resumen de compra</h1>
+    </div>
+    <div style="padding: 20px; text-align: left;">
+        <p>Estimado(a) {{ nombre }} {{ apellido }},</p>
+        <p>Gracias por tu compra. A continuación, se muestra un resumen de tu orden:</p>
+        <ul>
+            <li><strong>Nombre:</strong> {{ nombre }} {{ apellido }}</li>
+            <li><strong>Email:</strong> {{ email }}</li>
+            <li><strong>Número de Documento:</strong> {{ numero_documento }}</li>
+            <li><strong>Número de Teléfono:</strong> {{ celular }}</li>
+            <li><strong>Dirección de Envío:</strong> {{ direccion }}</li>
+            <li><strong>Código Postal:</strong> {{ codigo_postal }}</li>
+            <li><strong>Ciudad:</strong> {{ ciudad }}</li>
+            <li><strong>Fecha Procesado:</strong> {{ fecha }}</li>
+            <li><strong>Productos:</strong></li>
+        </ul>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Producto</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Cantidad</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in orden.items.all %}
+                    <tr>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ item.producto.nombre }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ item.cantidad }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">₲{{ item.producto.precio }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <ul>
+            <li><strong>Total de Productos:</strong> {{ total_cantidad }}</li>
+            <li><strong>Total Costo:</strong> ₲{{ total_costo }}</li>
+        </ul>
+        <p>Para más detalles sobre tu orden, puedes iniciar sesión en nuestro sitio web <a href="{{ login_url }}">aquí</a>.</p>
+        <p>Gracias por tu compra.</p>
+    </div>
+    <div style="text-align: center; padding: 10px 0; font-size: 12px; color: #888888;">
+        <p>© 2024 Tu Compañía. Todos los derechos reservados.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -24,10 +24,7 @@ class Persona(AbstractBaseUser, PermissionsMixin):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     numero_documento = models.CharField(max_length=255, unique=True)
-    direccion = models.CharField(max_length=255)
     celular = models.CharField(max_length=255)
-    codigo_postal = models.CharField(max_length=20)
-    ciudad = models.CharField(max_length=100)
     custom_username = models.CharField(max_length=30, unique=True, null=True, blank=True)
     objects = PersonaManager()
 
