@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+
+from shop.models import Producto
 
 
 class PersonaManager(BaseUserManager):
@@ -43,10 +46,12 @@ class Persona(AbstractBaseUser, PermissionsMixin):
         super().save(*args, **kwargs)
 
 
-# class Cliente(models.Model):
-#     cliente_id = models.AutoField(primary_key=True)
-#     persona_id = models.OneToOneField(Persona, on_delete=models.CASCADE)
-#     fecha_ingreso = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return f"{self.persona_id}"
+class Valoracion(models.Model):
+    usuario = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    puntuacion = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comentario = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('usuario', 'producto')

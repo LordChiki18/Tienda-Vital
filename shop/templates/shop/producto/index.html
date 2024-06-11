@@ -3,29 +3,66 @@
 
 {% block content %}
     <div class="container" id="products">
-        <h2>Nuestros Productos</h2>
-        <div class="product">
-            <img src="te-verde.jpg" alt="Té Verde">
-            <h2>Té Verde</h2>
-            <p>Un té fresco y revitalizante.</p>
+        <!-- =================================
+           BANNER
+        ================================== -->
+        <div class="hm-banner">
+            <div class="img-banner">
+                <img src="{% static 'img/banner.png' %}" alt="banner">
+            </div>
+            <a href=""></a>
         </div>
-        <div class="product">
-            <img src="te-negro.jpg" alt="Té Negro">
-            <h2>Té Negro</h2>
-            <p>Un té fuerte y energizante.</p>
+
+        <!-- =================================
+           HOME CATEGROIAS
+        ================================== -->
+        <div class="hm-page-block">
+            <div class="container">
+                <div class="header-title">
+                    <h1 data-aos="fade-up" data-aos-duration="3000">Categorías</h1>
+                </div>
+
+                <div class="hm-grid-category">
+
+                    <div class="grid-item" data-aos="fade-up" data-aos-duration="1000">
+                        <a href="{% url 'shop:producto_lista' %}">
+                            <img src="{% static 'img/te.jpg' %}" alt="">
+                            <div class="c-info">
+                                <h3>Té e Infuciones</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid-item" data-aos="fade-up" data-aos-duration="1500">
+                        <a href="{% url 'shop:producto_lista' %}">
+                            <img src="{% static 'img/suplementos.jpg' %}" alt="">
+                            <div class="c-info">
+                                <h3>Suplementos</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid-item" data-aos="fade-up" data-aos-duration="2000">
+                        <a href="{% url 'shop:producto_lista' %}">
+                            <img src="{% static 'img/cremas.jpg' %}" alt="">
+                            <div class="c-info">
+                                <h3>Cremas y Ungüentos</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid-item" data-aos="fade-up" data-aos-duration="2000">
+                        <a href="{% url 'shop:producto_lista' %}">
+                            <img src="{% static 'img/todos.png' %}" alt="">
+                            <div class="c-info">
+                                <h3>Todos</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-        <div class="product">
-            <img src="te-blanco.jpg" alt="Té Blanco">
-            <h2>Té Blanco</h2>
-            <p>Un té delicado y suave.</p>
-        </div>
-    </div>
-    <div class="container" id="about">
-        <h2>Acerca de Nosotros</h2>
-        <p>Somos una tienda dedicada a ofrecer los mejores tés de todo el mundo.</p>
-    </div>
-    <div class="container" id="contact">
-        <h2>Contacto</h2>
-        <p>Puedes contactarnos en <a href="mailto:info@tiendadete.com">info@tiendadete.com</a>.</p>
     </div>
 {% endblock content %}

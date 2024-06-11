@@ -1,10 +1,11 @@
+from django.http import Http404
 from django.shortcuts import render
 from rest_framework import viewsets, generics, permissions
 from rest_framework.permissions import IsAuthenticated
 
-from accounts.models import Persona
+from accounts.models import Persona, Valoracion
 from api.serializers import CategoriaSerializer, ProductoSerializer, PersonaSerializer, PersonaUpdateSerializer, \
-    OrdenSerializer, OrdenItemSerializer
+    OrdenSerializer, OrdenItemSerializer, ValoracionSerializer
 from orders.models import Orden, OrdenItem
 from shop.models import Categoria, Producto
 
@@ -35,7 +36,10 @@ class PersonaUpdateView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         # Recupera la persona asociada al usuario autenticado
-        return Persona.objects.get(custom_username=self.request.user)
+        try:
+            return Persona.objects.get(email=self.request.user.email)
+        except Persona.DoesNotExist:
+            raise Http404("Persona matching query does not exist.")
 
     def perform_update(self, serializer):
         # Realiza la actualización de la persona
@@ -43,12 +47,6 @@ class PersonaUpdateView(generics.RetrieveUpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-
-
-# class ClienteViews(viewsets.ModelViewSet):
-#     queryset = Cliente.objects.all()
-#     permission_classes = [permissions.IsAdminUser]
-#     serializer_class = ClienteSerializer
 
 
 class OrdenViews(viewsets.ModelViewSet):
@@ -61,3 +59,9 @@ class OrdenItemViews(viewsets.ModelViewSet):
     queryset = OrdenItem.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = OrdenItemSerializer
+
+
+class ValoracionViews(viewsets.ModelViewSet):
+    queryset = Valoracion.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = ValoracionSerializer

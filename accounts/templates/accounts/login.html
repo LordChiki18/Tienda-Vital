@@ -1,20 +1,22 @@
 {% extends 'shop/base.html' %}
 {% block content %}
     <div class="section__container header__container">
-        <div id="main">
-            <form action="{% url 'accounts:iniciar_sesion' %}" method="post">
-                <p> Para iniciar sesion ingresa tus datos</p>
-                {% csrf_token %}
-                <input type="text" id="username" placeholder="Usuario" name="username" required>
-                <br>
-                <input type="password" id="password" placeholder="Contraseña" name="password" required>
-                <br>
-                <label>
-                    {{ error_message }}
-                </label>
-                <br>
-                <button class="btn form__btn" type="submit">Iniciar Sesion</button>
-            </form>
+        <div class="container" id="products">
+            <h1>Para iniciar sesion ingresa tus datos</h1>
+            <div class="content-wrapper">
+                <form action="{% url 'accounts:iniciar_sesion' %}" method="post" class="order-form">
+                    {% csrf_token %}
+                    <label for="username"></label><input type="text" id="username" placeholder="Usuario" name="username" required>
+                    <br>
+                    <label for="password"></label><input type="password" id="password" placeholder="Contraseña" name="password" required>
+                    <br>
+                    <label>
+                        {{ error_message }}
+                    </label>
+                    <br>
+                    <button class="btn form__btn" type="submit">Iniciar Sesion</button>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}

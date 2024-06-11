@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
-from accounts.models import Persona
+from accounts.models import Persona, Valoracion
 from shop.models import Categoria, Producto
 from orders.models import Orden, OrdenItem
 
@@ -32,8 +32,7 @@ class PersonaSerializer(serializers.ModelSerializer):
 class PersonaUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Persona
-        fields = ['email', 'ciudad_id', 'nombre', 'apellido', 'direccion',
-                  'celular']
+        fields = ['email', 'nombre', 'apellido', 'celular']
 
 
 class OrdenSerializer(serializers.ModelSerializer):
@@ -48,7 +47,7 @@ class OrdenItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class ClienteSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Cliente
-#         fields = '__all__'
+class ValoracionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Valoracion
+        fields = '__all__'
