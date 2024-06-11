@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
 
@@ -7,7 +8,7 @@ from accounts.models import Persona
 from shop.models import Producto
 # Create your views here.
 
-from .models import OrdenItem
+from .models import OrdenItem, Orden
 from .forms import OrdenCreateForm
 from cart.cart import Cart
 
@@ -23,6 +24,7 @@ def enviar_correo(to_email, subject, template_name, context):
     email.send(fail_silently=False)
 
 
+@login_required
 def orden_create(request):
     cart = Cart(request)
     persona = Persona.objects.get(email=request.user.email)
@@ -76,3 +78,30 @@ def orden_create(request):
     return render(request,
                   'ordenes/orden/crear.html',
                   {'cart': cart, 'form': form, 'persona': persona})
+
+
+def login_and_redirect_to_cart(request):
+    if request.user.is_authenticated:
+        # El usuario ya inició sesión, redirigirlo a su carrito
+        return redirect('orders:orden_create')
+    else:
+        # Guardar la URL actual en la sesión para redirigir después del inicio de sesión
+        request.session['next'] = reverse('orders:orden_create')
+        return redirect('accounts:iniciar_sesion')
+
+
+@login_required
+def resumen_ordenes(request):
+    pedidos = OrdenItem.objects.filter(orden__persona=request.user)
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render(request, 'ordenes/orden/historial.html', {'pedidos': pedidos})
+    return render(request, 'ordenes/orden/resumen.html', {'pedidos': pedidos})
+
+
+@login_required
+def detalle_orden(request, orden_id):
+    orden = get_object_or_404(Orden, id=orden_id)
+    itemOrden = OrdenItem.objects.get(orden_id=orden)
+    total_cantidad = sum(item.cantidad for item in orden.items.all())
+    return render(request, 'ordenes/orden/detalles.html',
+                  {'orden': orden, 'itemOrden': itemOrden, 'total': total_cantidad})

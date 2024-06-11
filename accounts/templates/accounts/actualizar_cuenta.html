@@ -1,0 +1,60 @@
+<div class="container">
+    <h3>Actualizar Cuenta</h3>
+    <div class="content-wrapper">
+        <div class="card">
+            <form class="order-form">
+                {% csrf_token %}
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ persona.email }}" required><br>
+
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="{{ persona.nombre }}" required><br>
+
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" value="{{ persona.apellido }}" required><br>
+
+                <label for="celular">Celular:</label>
+                <input type="text" id="celular" name="celular" value="{{ persona.celular }}" required><br>
+
+                <button type="submit">Actualizar Cuenta</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("update-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            var nombre = document.getElementById("nombre").value;
+            var apellido = document.getElementById("apellido").value;
+            var celular = document.getElementById("celular").value;
+            var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+            fetch("{% url 'actualizar-persona' %}", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken,
+                },
+                body: JSON.stringify({
+                    email: email,
+                    nombre: nombre,
+                    apellido: apellido,
+                    celular: celular,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("message").textContent = "Cuenta actualizada exitosamente";
+                })
+                .catch(error => {
+                    document.getElementById("message").textContent = "Error al actualizar la cuenta: " + error.message;
+                });
+        });
+    });
+</script>
+</div>

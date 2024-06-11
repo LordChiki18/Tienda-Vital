@@ -1,4 +1,6 @@
 import secrets
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import EmailMessage
@@ -8,6 +10,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 from accounts.forms import RegistroForm
+from accounts.models import Persona
 
 
 # Create your views here.
@@ -53,7 +56,7 @@ def registro_usuario(request):
             email = form.cleaned_data.get('email')
             custom_username = user.custom_username
 
-            login_url = request.build_absolute_uri(reverse('accounts:iniciar_sesion'))
+            home_url = request.build_absolute_uri(reverse('shop:index'))
 
             # Envía el correo electrónico
             subject = 'Registro exitoso'
@@ -62,7 +65,7 @@ def registro_usuario(request):
                 'apellido': apellido,
                 'custom_username': custom_username,
                 'generated_password': generated_password,
-                'login_url': login_url,
+                'home_url': home_url,
             }
 
             enviar_correo(email, subject, 'accounts/registro_exitoso_email.html', context)
@@ -94,3 +97,20 @@ def iniciar_sesion(request):
 def cerrar_sesion(request):
     logout(request)  # Cierra la sesión del usuario actual
     return redirect('shop:index')  # Redirige al usuario a la página de inicio u otra página de tu elección
+
+
+@login_required
+def mis_datos(request):
+    try:
+        persona = Persona.objects.get(email=request.user.email)
+    except Persona.DoesNotExist:
+        persona = None
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        context = {
+            'persona': persona
+        }
+        return render(request, 'accounts/actualizar_cuenta.html', context)
+
+    # Si no es una solicitud AJAX, renderiza una plantilla general (opcional)
+    return render(request, 'accounts/resumen.html', {'persona': persona})

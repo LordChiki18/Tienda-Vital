@@ -1,0 +1,61 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %} Detalles de la Orden {{ orden.id }}{% endblock title %}
+{% block content %}
+    <body>
+    <div class="container" id="producs">
+        <h1>Detalles de la Orden {{ orden.id }}</h1>
+        <div>
+            <h4>Resumen de tu compra</h4>
+            <ul>
+                <li>ID: {{ orden.id }}</li>
+                <li>Nombre {{ orden.persona.nombre }} {{ orden.persona.apellido }}</li>
+                <li>Email: {{ orden.persona.email }}</li>
+                <li>Numero de Documento: {{ orden.persona.numero_documento }}</li>
+                <li>Numero de Telefono: {{ orden.persona.celular }}</li>
+                <li>Direccion de Envio: {{ orden.direccion }}</li>
+                <li>Codigo Postal: {{ orden.codigo_postal }}</li>
+                <li>Ciudad: {{ orden.ciudad }}</li>
+                <li>Fecha Procesado: {{ orden.creado }}</li>
+                <li>Productos:</li>
+            </ul>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                <tr>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Producto</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Cantidad</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Precio</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in orden.items.all %}
+                    <tr>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ itemOrden.producto }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ itemOrden.cantidad }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+                            ₲{{ itemOrden.producto.precio }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <ul>
+                <li>Total de Prodcutos: {{ total }} </li>
+                <li>Total Costo: {{ orden.get_total_costo }} ₲</li>
+                <li>Estatus de pago: {% if orden.pagado == False %}Falta Pagar{% else %}Pagado{% endif %} </li>
+                <li>Ultima modificacion: {{ orden.actualizado }}</li>
+            </ul>
+        </div>
+        <div class="text-right">
+            <a href="{% url "accounts:datos" %}"><input type="button" value="Volver Atras"
+                                                                class="hm-btn btn-danger"></a>
+            <a href="{% url "shop:index" %}"><input type="button" value="Inicio"
+                                                    class="hm-btn btn-primary-first"></a>
+
+        </div>
+        <br>
+    </div>
+
+    </body>
+
+{% endblock content %}

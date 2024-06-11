@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container" id="products">
     <h1>Tu carrito de compra</h1>
 
     {% if cart %}
@@ -37,7 +38,7 @@
                             <form action="{% url "cart:cart_agregar" producto.id %}" method="post">
                                 {{ item.update_quantity_form.cantidad }}
                                 {{ item.update_quantity_form.anular }}
-                                <input type="submit" value="Actualizar" class="btn btn-primary">
+                                <input type="submit" value="Actualizar" class="btn-primary-first">
                                 {% csrf_token %}
                             </form>
                         </td>
@@ -60,15 +61,15 @@
             </tbody>
         </table>
         <p class="text-right">
-            <a href="{% url "shop:producto_lista" %}" class="button light">Seguir comprando</a>
-            <a href="{% url "orders:orden_create" %}" class="button verify">Verificar pedido</a>
+            <a href="{% url "shop:producto_lista" %}"><input type="submit" value="Seguir comprando" class="hm-btn btn-primary-first"></a>
+            <a href="{% url "orders:orden_create" %}" class="button verify"><input type="submit" value="Verificar pedido" class="hm-btn btn-second-first"></a>
         </p>
     {% else %}
-        <p class="text-center">Tu carrito está vacío.</p>
-        <p class="text-center"><img class="cart-image" src="{% static "img/klipartz.com.png" %}"></p>
+        <h3 class="text-center">Tu carrito está vacío.</h3>
+        <p class="text-center"><img class="product-image" src="{% static "img/klipartz.com.png" %}"></p>
         <p class="text-center">
-            <a href="{% url "shop:producto_lista" %}" class="button verify">Comenzar a comprar</a>
+            <a href="{% url "shop:producto_lista" %}" class="button verify"><input type="submit" value="Comenzar a comprar" class="hm-btn btn-primary-first"></a>
         </p>
     {% endif %}
-
+    </div>
 {% endblock %}

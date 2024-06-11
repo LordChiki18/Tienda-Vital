@@ -6,9 +6,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" id="products">
         <div class="product-detail">
             <img class="product-image" src="
+
+
+
+
+
                     {% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static "img/no_imagen.png" %}{% endif %}"
                  alt="{{ producto.nombre }}">
             <div class="product-info">
@@ -22,12 +27,44 @@
                 <form action="{% url "cart:cart_agregar" producto.id %}" method="post">
                     {{ cart_product_form }}
                     {% csrf_token %}
-                    <input type="submit" value="Agregar al carrito" class="btn btn-primary">
+                    <br>
+                    <input type="submit" value="Agregar al carrito" class="hm-btn btn-primary-first">
                 </form>
                 <p class="description">{{ producto.descripcion|linebreaks }}</p>
-                <a href="{% url "shop:producto_lista" %}"><input type="button" value="Volver Atras" class="btn-danger"></a>
-
+                <a href="{% url "shop:producto_lista" %}"><input type="button" value="Volver Atras"
+                                                                 class="hm-btn btn-danger"></a>
             </div>
         </div>
+
+        <div id="sidebar">
+            {% if valoraciones %}
+                <h2>Valoraciones:</h2>
+                <ul>
+                    {% for valoracion in valoraciones %}
+                        <li>{{ valoracion.usuario.nombre }} - {{ valoracion.puntuacion }}
+                            - {{ valoracion.comentario }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay valoraciones para este producto.</p>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+            <div class="product-list" id="mainProducto">
+                <!-- Formulario para agregar una nueva valoración -->
+                <h2>Dejar una valoración:</h2>
+                <form method="post" class="order-form">
+                    {% csrf_token %}
+                    {{ valoracion_form.as_p }}
+                    {{ mensaje }}
+                    <button type="submit" class="hm-btn btn-primary-first">Enviar Valoración</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="product-list" id="mainProducto">
+                <p>Favor inicia Sesion para puntuar</p>
+            </div>
+        {% endif %}
+
     </div>
 {% endblock %}

@@ -1,0 +1,33 @@
+<div class="container">
+    <h1>Resumen de Pedidos</h1>
+    <div class="pedidos-list">
+        {% if pedidos %}
+            <table>
+                <thead>
+                <tr>
+                    <th>Orden ID</th>
+                    <th>Nombre Orden</th>
+                    <th>Precio</th>
+                    <th>Detalles</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pedido in pedidos %}
+                    <tr>
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.orden }}</td>
+                        <td>{{ pedido.precio }}</td>
+                        <td><a href="{% url 'orders:detalle_orden' orden_id=pedido.orden_id %}">Ver mas</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <p class="text-right">
+                <a href="{% url "shop:producto_lista" %}"><input type="submit" value="Seguir comprando"
+                                                                 class="hm-btn btn-primary-first"></a></p>
+        {% else %}
+            <p>No tienes pedidos.</p>
+        {% endif %}
+    </div>
+</div>
