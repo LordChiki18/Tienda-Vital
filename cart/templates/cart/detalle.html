@@ -7,69 +7,76 @@
 
 {% block content %}
     <div class="container" id="products">
-    <h1>Tu carrito de compra</h1>
+        <h1>Tu carrito de compra</h1>
 
-    {% if cart %}
-        <table class="cart">
-            <thead>
-            <tr>
-                <th>Imagen</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Remover</th>
-                <th>Precio Unitario</th>
-                <th>Precio</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in cart %}
-                {% with producto=item.producto %}
-                    <tr>
-                        <td>
-                            <a href="{{ producto.get_absolute_url }}">
-                                <img src="
-
-
-                                        {% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static "img/no_imagen.png" %}{% endif %}">
-                            </a>
-                        </td>
-                        <td>{{ producto.nombre }}</td>
-                        <td>
-                            <form action="{% url "cart:cart_agregar" producto.id %}" method="post">
-                                {{ item.update_quantity_form.cantidad }}
-                                {{ item.update_quantity_form.anular }}
-                                <input type="submit" value="Actualizar" class="btn-primary-first">
-                                {% csrf_token %}
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{% url "cart:cart_remover" producto.id %}" method="post">
-                                <input type="submit" value="Remover" class="btn-danger">
-                                {% csrf_token %}
-                            </form>
-                        </td>
-                        <td>${{ item.precio }}</td>
-                        <td>${{ item.total_precio }}</td>
-                    </tr>
-                {% endwith %}
-            {% endfor %}
-            <tr class="total">
-                <td class="num">Total</td>
-                <td colspan="4"></td>
-                <td class="num">${{ cart.get_total_precio }}</td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="text-right">
-            <a href="{% url "shop:producto_lista" %}"><input type="submit" value="Seguir comprando" class="hm-btn btn-primary-first"></a>
-            <a href="{% url "orders:orden_create" %}" class="button verify"><input type="submit" value="Verificar pedido" class="hm-btn btn-second-first"></a>
-        </p>
-    {% else %}
-        <h3 class="text-center">Tu carrito está vacío.</h3>
-        <p class="text-center"><img class="product-image" src="{% static "img/klipartz.com.png" %}"></p>
-        <p class="text-center">
-            <a href="{% url "shop:producto_lista" %}" class="button verify"><input type="submit" value="Comenzar a comprar" class="hm-btn btn-primary-first"></a>
-        </p>
-    {% endif %}
+        {% if cart %}
+            <table class="cart">
+                <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Remover</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart %}
+                    {% with producto=item.producto %}
+                        <tr>
+                            <td>
+                                <a href="{{ producto.get_absolute_url }}">
+                                    <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static "img/no_imagen.png" %}{% endif %}">
+                                </a>
+                            </td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>
+                                <form action="{% url "cart:cart_agregar" producto.id %}" method="post">
+                                    {{ item.update_quantity_form.cantidad }}
+                                    {{ item.update_quantity_form.anular }}
+                                    <input type="submit" value="Actualizar" class="btn-primary-first">
+                                    {% csrf_token %}
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url "cart:cart_remover" producto.id %}" method="post">
+                                    <input type="submit" value="Remover" class="btn-danger">
+                                    {% csrf_token %}
+                                </form>
+                            </td>
+                            <td>${{ item.precio }}</td>
+                            <td>${{ item.total_precio }}</td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+                <tr class="total">
+                    <td class="num">Total</td>
+                    <td colspan="4"></td>
+                    <td class="num">${{ cart.get_total_precio }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="text-right">
+                <a href="{% url "shop:producto_lista" %}"><input type="submit" value="Seguir comprando" class="hm-btn btn-primary-first"></a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url "orders:orden_create" %}" class="button verify"><input type="submit" value="Verificar pedido" class="hm-btn btn-second-first"></a>
+                {% else %}
+                    <a class="button verify" onclick="mostrarModalInicioSesion()"><input type="submit" value="Verificar pedido" class="hm-btn btn-second-first"></a>
+                {% endif %}
+            </p>
+        {% else %}
+            <h3 class="text-center">Tu carrito está vacío.</h3>
+            <p class="text-center"><img class="product-image" src="{% static "img/klipartz.com.png" %}"></p>
+            <p class="text-center">
+                <a href="{% url "shop:producto_lista" %}" class="button verify"><input type="submit" value="Comenzar a comprar" class="hm-btn btn-primary-first"></a>
+            </p>
+        {% endif %}
     </div>
+    <script>
+        // Función para mostrar el modal de inicio de sesión cuando el usuario no está autenticado
+        function mostrarModalInicioSesion() {
+            $('#loginModal').modal('show');
+        }
+    </script>
 {% endblock %}

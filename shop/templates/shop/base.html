@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <title>{% block title %}Verde Vital{% endblock %}</title>
     <!-- Mis Estilos -->
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
@@ -21,7 +23,6 @@
     ================================== -->
 
     <div class="hm-header">
-
         <div class="container">
             <div class="header-menu">
                 <div class="hm-logo">
@@ -40,7 +41,7 @@
                             </li>
                             <li><a href="{% url 'accounts:cerrar_sesion' %}">Salir</a></li>
                         {% else %}
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar Sesión</a></li>
+                            <li><a href="#" id="loginBtn">Iniciar Sesión</a></li>
                             <li><a href="{% url 'accounts:registro' %}">Quiero ser Cliente</a></li>
                         {% endif %}
                         <li>
@@ -95,8 +96,6 @@
         </div>
     </div>
 </div>
-
-<!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -104,19 +103,9 @@
                 <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form method="post" action="{% url 'accounts:iniciar_sesion' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                </form>
+            <div class="modal-body" id="loginModalBody">
+                <!-- Aquí se cargará el contenido HTML del formulario de inicio de sesión -->
+                {% include 'accounts/login.html' %}
             </div>
         </div>
     </div>
@@ -134,8 +123,40 @@
 <script>
     AOS.init({
         duration: 1200,
-    })
-</script>
+    });
 
+    $(document).ready(function () {
+        $('#loginBtn').on('click', function (e) {
+            e.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+            $('#loginModal').modal('show'); // Mostrar el modal
+        });
+
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault(); // Prevenir el envío del formulario
+
+            var formData = $(this).serialize(); // Obtener datos del formulario
+
+            // Realizar la solicitud AJAX para iniciar sesión
+            $.ajax({
+                url: '{% url 'accounts:iniciar_sesion' %}',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Si el inicio de sesión es exitoso, recarga la página
+                        location.reload();
+                    } else {
+                        // Si hay un error, muestra el mensaje de error en el formulario
+                        $('#errorLabel').text(response.error_message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Si hay un error en la solicitud AJAX, muestra un mensaje genérico de error en el formulario
+                    $('#errorLabel').text('Ha ocurrido un error. Por favor, inténtalo de nuevo.');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

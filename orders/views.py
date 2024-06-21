@@ -24,9 +24,15 @@ def enviar_correo(to_email, subject, template_name, context):
     email.send(fail_silently=False)
 
 
-@login_required
 def orden_create(request):
     cart = Cart(request)
+
+    if not request.user.is_authenticated:
+        # Si el usuario no está autenticado, redirige a la página principal y almacena la URL de la orden en la
+        # sesión
+        request.session['next'] = reverse('orders:orden_create')
+        return redirect('shop:index')
+
     persona = Persona.objects.get(email=request.user.email)
     email = persona.email
     if request.method == 'POST':
@@ -75,6 +81,7 @@ def orden_create(request):
                           {'orden': orden})
     else:
         form = OrdenCreateForm()
+
     return render(request,
                   'ordenes/orden/crear.html',
                   {'cart': cart, 'form': form, 'persona': persona})
@@ -87,12 +94,12 @@ def login_and_redirect_to_cart(request):
     else:
         # Guardar la URL actual en la sesión para redirigir después del inicio de sesión
         request.session['next'] = reverse('orders:orden_create')
-        return redirect('accounts:iniciar_sesion')
+        return redirect('accounts:registro')
 
 
 @login_required
 def resumen_ordenes(request):
-    pedidos = OrdenItem.objects.filter(orden__persona=request.user)
+    pedidos = Orden.objects.filter(persona=request.user)
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render(request, 'ordenes/orden/historial.html', {'pedidos': pedidos})
     return render(request, 'ordenes/orden/resumen.html', {'pedidos': pedidos})
@@ -101,7 +108,7 @@ def resumen_ordenes(request):
 @login_required
 def detalle_orden(request, orden_id):
     orden = get_object_or_404(Orden, id=orden_id)
-    itemOrden = OrdenItem.objects.get(orden_id=orden)
+    itemOrden = OrdenItem.objects.filter(orden_id=orden)
     total_cantidad = sum(item.cantidad for item in orden.items.all())
     return render(request, 'ordenes/orden/detalles.html',
                   {'orden': orden, 'itemOrden': itemOrden, 'total': total_cantidad})

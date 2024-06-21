@@ -9,11 +9,6 @@
     <div class="container" id="products">
         <div class="product-detail">
             <img class="product-image" src="
-
-
-
-
-
                     {% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static "img/no_imagen.png" %}{% endif %}"
                  alt="{{ producto.nombre }}">
             <div class="product-info">
