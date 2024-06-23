@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
 from accounts.models import Persona, Valoracion
-from shop.models import Categoria, Producto
+from shop.models import Categoria, Producto, Proveedor
 from orders.models import Orden, OrdenItem
 
 
@@ -50,4 +50,10 @@ class OrdenItemSerializer(serializers.ModelSerializer):
 class ValoracionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Valoracion
+        fields = '__all__'
+
+
+class ProveedorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Proveedor
         fields = '__all__'

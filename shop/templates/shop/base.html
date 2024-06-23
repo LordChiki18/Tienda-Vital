@@ -33,8 +33,6 @@
                 <nav class="hm-menu">
                     <ul>
                         <li><a href="{% url 'shop:producto_lista' %}">Productos</a></li>
-                        <li><a href="http://">Nosotros</a></li>
-                        <li><a href="http://">Contacto</a></li>
                         {% if user.is_authenticated %}
                             <li>
                                 <a href="{% url 'accounts:datos' %}">Bienvenido, {{ user.nombre }} {{ user.apellido }}!</a>
@@ -80,11 +78,9 @@
             <div class="foo-row">
                 <div class="foo-col">
                     <ul>
-                        <li><a href="#">Nosotros</a></li>
                         <li><a href="#">WhatsApp: 0981-xxx-xxx</a></li>
                         <li><a href="#">Correo electrónico: verdevital90@gmail.com</a></li>
                         <li><a href="#">Horario de atención: 08:00 - 12:00 | 13:00 - 16:00</a></li>
-                        <li><a href="#">Dirección</a></li>
                     </ul>
                 </div>
             </div>

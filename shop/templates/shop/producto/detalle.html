@@ -13,12 +13,13 @@
                  alt="{{ producto.nombre }}">
             <div class="product-info">
                 <h1>{{ producto.nombre }}</h1>
-                <h2>
+                <h5>Categoria:
                     <a class="categoria" href="{{ producto.categoria.get_absolute_url }}">
                         {{ producto.categoria }}
                     </a>
-                </h2>
-                <p class="price">₲{{ producto.precio }}</p>
+                </h5>
+                <p>Proveedor: {{ producto.proveedor }}</p>
+                <p class="price">Precio: ₲{{ producto.precio }}</p>
                 <form action="{% url "cart:cart_agregar" producto.id %}" method="post">
                     {{ cart_product_form }}
                     {% csrf_token %}
