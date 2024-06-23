@@ -6,8 +6,8 @@
                 <thead>
                 <tr>
                     <th>Orden ID</th>
-                    <th>Nombre Orden</th>
-                    <th>Precio</th>
+                    <th>Fecha Creada</th>
+                    <th>Direccion</th>
                     <th>Detalles</th>
                 </tr>
                 </thead>
@@ -15,9 +15,9 @@
                 {% for pedido in pedidos %}
                     <tr>
                         <td>{{ pedido.id }}</td>
-                        <td>{{ pedido.orden }}</td>
-                        <td>{{ pedido.precio }}</td>
-                        <td><a href="{% url 'orders:detalle_orden' orden_id=pedido.orden_id %}">Ver mas</a></td>
+                        <td>{{ pedido.creado }}</td>
+                        <td>{{ pedido.direccion }}</td>
+                        <td><a href="{% url 'orders:detalle_orden' orden_id=pedido.id %}">Ver mas</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

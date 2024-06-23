@@ -5,9 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 
 from accounts.models import Persona, Valoracion
 from api.serializers import CategoriaSerializer, ProductoSerializer, PersonaSerializer, PersonaUpdateSerializer, \
-    OrdenSerializer, OrdenItemSerializer, ValoracionSerializer
+    OrdenSerializer, OrdenItemSerializer, ValoracionSerializer, ProveedorSerializer
 from orders.models import Orden, OrdenItem
-from shop.models import Categoria, Producto
+from shop.models import Categoria, Producto, Proveedor
 
 
 # Create your views here.
@@ -65,3 +65,9 @@ class ValoracionViews(viewsets.ModelViewSet):
     queryset = Valoracion.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ValoracionSerializer
+
+
+class ProveedorViews(viewsets.ModelViewSet):
+    queryset = Proveedor.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProveedorSerializer

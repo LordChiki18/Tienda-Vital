@@ -28,12 +28,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in orden.items.all %}
+                {% for item in itemOrden %}
                     <tr>
-                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ itemOrden.producto }}</td>
-                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ itemOrden.cantidad }}</td>
-                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
-                            ₲{{ itemOrden.producto.precio }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ item.producto }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ item.cantidad }}</td>
+                        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">₲{{ item.producto.precio }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 
 from accounts.forms import ValoracionForm
 from accounts.models import Valoracion
+from cart.forms import CartAddProductForm
 from .models import Categoria, Producto
 
 
@@ -28,6 +29,7 @@ def producto_lista(request, categoria_slug=None):
 def producto_detalle(request, id, slug):
     producto = get_object_or_404(Producto, id=id, slug=slug, disponible=True)
     valoraciones = Valoracion.objects.filter(producto=producto)
+    cart_product_form = CartAddProductForm(producto=producto)
     mensaje = ''
 
     if request.method == 'POST':
@@ -49,4 +51,5 @@ def producto_detalle(request, id, slug):
                   {'producto': producto,
                    'valoraciones': valoraciones,
                    'valoracion_form': valoracion_form,
+                   'cart_product_form': cart_product_form,
                    'mensaje': mensaje})

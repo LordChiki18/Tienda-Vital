@@ -1,6 +1,7 @@
 import secrets
 
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import EmailMessage
@@ -85,11 +86,12 @@ def iniciar_sesion(request):
 
         if user is not None and user.check_password(password):
             login(request, user)
-            return redirect('shop:index')  # Redirige al usuario a la vista de cuentas
+            return JsonResponse({'success': True})  # Envía una respuesta JSON indicando éxito
 
         else:
             error_message = "Usuario o contraseña incorrectos"
-            return render(request, 'accounts/login.html', {'error_message': error_message})
+            return JsonResponse({'success': False, 'error_message': error_message},
+                                status=400)  # Envía un mensaje de error en JSON y establece el código de estado HTTP a 400 (Bad Request)
 
     return render(request, 'accounts/login.html')
 

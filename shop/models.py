@@ -22,8 +22,17 @@ class Categoria(models.Model):
                        args=[self.slug])
 
 
+class Proveedor(models.Model):
+    empresa = models.CharField(max_length=100, default="sin asignar")
+    telefono = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.empresa
+
+
 class Producto(models.Model):
     categoria = models.ForeignKey(Categoria, related_name='productos', on_delete=models.CASCADE)
+    proveedor = models.ForeignKey(Proveedor, related_name='proveedores', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
     imagen = models.ImageField(upload_to='productos/%Y/%m/%d', blank=True)

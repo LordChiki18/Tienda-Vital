@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 
 from api.views import CategoriaViews, ProductoViews, PersonaViews, PersonaUpdateView, OrdenViews, OrdenItemViews, \
-    ValoracionViews
+    ValoracionViews, ProveedorViews
 
 router = DefaultRouter()
 
@@ -12,6 +12,7 @@ router.register(r'Persona', PersonaViews)
 router.register(r'Orden', OrdenViews)
 router.register(r'OrdenItem', OrdenItemViews)
 router.register(r'Valoracion', ValoracionViews)
+router.register(r'Proveedor', ProveedorViews)
 
 urlpatterns = [
     path('gestion/', include(router.urls)),
